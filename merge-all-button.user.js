@@ -2,7 +2,7 @@
 // @name                Merge All Button for GitLab
 // @name:zh-CN          GitLab一键合并按钮
 // @namespace           https://greasyfork.org/users/692574
-// @version             0.0.99
+// @version             0.0.90
 // @description         Add a button to GitLab dashboard page to merge all merge requests 
 // @description:zh-CN   在GitLab仪表盘界面添加一个合并所有请求的按钮
 // @author              Chase Choi
@@ -28,7 +28,21 @@ const ACCESS_TOKEN = '<YOUR_ACCESS_TOKEN>';
     $(`${mergeAllElement}`).insertAfter($('.filter-dropdown-container'));
     $('.merge-all-btn').css('background-color', '#3C824E');
 
-    // get merge request list
+    // add event listener
+    $('.merge-all-btn').click(function() {
+        const text = "Are you sure to merge all?"
+        if (confirm(text) == true) {
+            console.log("Start merging all...");
+            mergeAll();
+        }
+    });
+})();
+
+/**
+ * Iterate all merge requests on current page and perform merge action for each one.
+ */
+function mergeAll() {
+    // iterate merge request list
     let elements = $('li.merge-request .issuable-info .issuable-reference');
     if (elements.length) {
         elements.each(function () {
@@ -37,13 +51,19 @@ const ACCESS_TOKEN = '<YOUR_ACCESS_TOKEN>';
                 const projectNamespace = mergeRequestReference.split('!')[0].trim().replace('/', '%2F');
                 const mergeRequestID = mergeRequestReference.split('!')[1];
                 console.log(projectNamespace, mergeRequestID);
-                startMerge(projectNamespace, mergeRequestID);
+                mergeProject(projectNamespace, mergeRequestID);
             }
         });
     }
-})();
+}
 
-function startMerge(projectNamespace, mergeRequestID) {
+/**
+ * Get project ID and perform merge action.
+ *
+ * @param {string} projectNamespace The project name with namespace.
+ * @param {number} mergeRequestID The merge request ID.
+ */
+function mergeProject(projectNamespace, mergeRequestID) {
     GM.xmlHttpRequest({
         method: "GET",
         url: `${BASE_URL}/api/v4/projects/${projectNamespace}`,
@@ -60,6 +80,12 @@ function startMerge(projectNamespace, mergeRequestID) {
     });
 }
 
+/**
+ * Perform actual merge action for specific project.
+ *
+ * @param {number} projectID The project ID.
+ * @param {number} mergeRequestID The merge request ID.
+ */
 function performMergeAction(projectID, mergeRequestID) {
     GM.xmlHttpRequest({
         method: "PUT",

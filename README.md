@@ -1,6 +1,6 @@
 # Merge All Button
 [![license](https://img.shields.io/github/license/chasechoi/merge-all-button?style=plastic)](https://github.com/ChaseChoi/merge-all-button/blob/main/LICENSE)
-[![tag](https://img.shields.io/github/v/tag/chasechoi/merge-all-button)](https://github.com/ChaseChoi/merge-all-button/tags)
+[![tag](https://img.shields.io/github/v/tag/chasechoi/merge-all-button?style=plastic)](https://github.com/ChaseChoi/merge-all-button/tags)
 
 A Greasemonkey script to add a button on GitLab dashboard page to merge all merge requests.
 

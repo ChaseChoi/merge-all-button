@@ -30,6 +30,10 @@ const ACCESS_TOKEN = '<YOUR_ACCESS_TOKEN>';
 
     // add event listener
     $('.merge-all-btn').click(function() {
+        if (ACCESS_TOKEN == '<YOUR_ACCESS_TOKEN>') {
+            alert("Empty access token!");
+            return;
+        }
         const text = "Are you sure to merge all?"
         if (confirm(text) == true) {
             console.log("Start merging all...");

@@ -2,7 +2,7 @@
 // @name                Merge All Button for GitLab
 // @name:zh-CN          GitLab一键合并按钮
 // @namespace           https://greasyfork.org/users/692574
-// @version             0.0.91
+// @version             0.0.92
 // @description         Add a button to GitLab dashboard page to merge all merge requests 
 // @description:zh-CN   在GitLab仪表盘界面添加一个合并所有请求的按钮
 // @author              Chase Choi
@@ -52,7 +52,7 @@ function mergeAll() {
         elements.each(function () {
             const mergeRequestReference = $(this).text();
             if (mergeRequestReference.length) {
-                const projectNamespace = mergeRequestReference.split('!')[0].trim().replace('/', '%2F');
+                const projectNamespace = mergeRequestReference.split('!')[0].trim().replaceAll('/', '%2F');
                 const mergeRequestID = mergeRequestReference.split('!')[1];
                 console.log(projectNamespace, mergeRequestID);
                 mergeProject(projectNamespace, mergeRequestID);
